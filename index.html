@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>窗花灯 · Lattice Lantern</title>
+    <meta name="description" content="Type a word. It is cut as one connected paper-cut and hung as a lantern." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&family=Cormorant+Garamond:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <canvas id="room"></canvas>
+
+    <div class="veil"></div>
+
+    <main class="ui">
+      <header class="mark">
+        <span class="mark-cjk">窗花灯</span>
+        <span class="mark-latin">Lattice Lantern</span>
+      </header>
+
+      <form class="console" id="form" autocomplete="off">
+        <div class="field">
+          <input
+            id="word"
+            name="word"
+            type="text"
+            placeholder="你的名字 / your name"
+            maxlength="9"
+            spellcheck="false"
+            aria-label="Your name: one to three Chinese characters, or 2 to 9 Latin letters"
+          />
+          <button type="submit" id="cut">Cut</button>
+        </div>
+        <p class="note" id="note">Type your name. The light follows the mouse.</p>
+        <div class="chips" id="chips" aria-label="Pre-cut band"></div>
+      </form>
+
+      <button class="download" id="download" hidden>Download SVG</button>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

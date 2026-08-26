@@ -1,0 +1,9 @@
+{
+	"servers": {
+		"quiverai": {
+			"type": "http",
+			"url": "https://app.quiver.ai/mcp"
+		}
+	},
+	"inputs": []
+}
