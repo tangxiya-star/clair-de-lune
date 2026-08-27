@@ -1,7 +1,9 @@
 import { normalizeWord, buildPrompt, INSTRUCTIONS } from "../src/word.js";
 
 const ENDPOINT = "https://api.quiver.ai/v1/svgs/generations";
-const MODEL = "arrow-2";
+// Quiver pulled arrow-2 mid-event; arrow-1.1 is the current default. The roster
+// has moved twice in one evening, so keep it overridable without a code change.
+const MODEL = process.env.QUIVER_MODEL || "arrow-1.1";
 
 function pickSvg(payload) {
   const svg = payload?.data?.[0]?.svg;

@@ -28,35 +28,71 @@ export const INSTRUCTIONS =
   "No raster, no filters, no live text nodes (the word is paths). " +
   "viewBox landscape for wrapping a cylinder. Do not draw a full-bleed background rect. " +
   "The viewBox must be landscape, about three times wider than tall. " +
-  "Never draw a backdrop plate of any shape or colour behind the cut, and never define a gradient.";
+  "Never draw a backdrop plate of any shape or colour behind the cut, and never define a gradient. " +
+  // Arrow keeps reaching for a frame; it has to be forbidden in the instructions
+  // as well as the prompt, and the cut has to run off both ends to wrap.
+  "The artwork must bleed to the left and right edges of the viewBox. " +
+  "Absolutely no rectangular border, no outline box, no frame, no background plate.";
+
+// A cylinder shows only about forty percent of its circumference at once, so a
+// name cut once is a name the visitor can never read whole — they get "LY", not
+// "HOLLY". Repeat it around the band the way a LOEWE lantern band repeats its
+// wordmark. How many times depends on how much glyph the name already spends.
+function repeatsFor(chars, script) {
+  if (script === "cjk") return chars.length >= 3 ? 2 : 3;
+  return chars.length <= 3 ? 4 : chars.length <= 6 ? 3 : 2;
+}
+
+// Three stacked registers: a narrow ornament rail, the word, a narrow ornament
+// rail. Fusing every glyph to both rails is what keeps the sheet one connected
+// piece and every counter bridged — it is the rule, not decoration.
+const BAND =
+  "The strip is three horizontal registers: a NARROW top register of botanical paper-cut ornament, " +
+  "a TALL middle register holding the name, and a NARROW bottom register mirroring the top. " +
+  "Every glyph is fused to the top register at its cap height and to the bottom register at its baseline, " +
+  "so the whole strip is ONE connected sheet of paper with nothing floating. " +
+  "The top and bottom edges of the strip are the ornament silhouette itself: organic, scalloped, irregular. " +
+  "There is NO rectangular frame, NO border box, NO straight bar along any edge, NO background plate. " +
+  "The cut bleeds off the left and right edges so the two ends butt together seamlessly. " +
+  "Extremely wide letterbox proportions, at least six times wider than tall. " +
+  "Vermillion red paper on transparent background. No photorealism, no gradients, no shadow, no extra words.";
 
 export function buildPrompt(word, script) {
+  const chars = [...word];
+  const times = repeatsFor(chars, script);
+
   if (script === "cjk") {
-    const chars = [...word];
     // A two or three character name has to read as one name across the band,
     // evenly spaced, not as separate stacked motifs.
     const subject =
       chars.length === 1
-        ? `Center hanzi is ${word}`
-        : `Center motif is the ${chars.length}-character name ${chars.join(" ")}, ` +
-          "cut left to right on one baseline, evenly spaced, equal weight, joined by the lattice";
+        ? `The hanzi ${word}`
+        : `The ${chars.length}-character name ${chars.join(" ")}, cut left to right on one baseline, ` +
+          "evenly spaced, equal weight, joined by the lattice";
 
     return (
-      `Yi zhang ke zuo denglong zhao de jianzhi chuanghua. ${subject}, ` +
-      "must be stencil cut not brush calligraphy. All ornaments grow from the strokes, " +
-      "one connected sheet, no floating islands. Every enclosed counter (ri, kou, tian) keeps a bridge. " +
-      "Landscape 3:1 wraparound band. Vermillion #C41E3A, transparent bg. " +
-      "No zodiac, no extra characters, no gradient, no shadow, no frame."
+      "Yi zhang ke zuo denglong zhao de jianzhi chuanghua: one very long horizontal strip of vermillion " +
+      "paper designed to wrap all the way around a cylinder. " +
+      `${subject} is repeated ${times} times across the strip, evenly spaced, with a panel of botanical ` +
+      "ornament between each repeat, so that from any single viewpoint one whole name is readable. " +
+      "Every repeat is stencil cut, not brush calligraphy, with thick even strokes filling about sixty " +
+      "percent of the strip height. All ornaments grow from the strokes. " +
+      "Every enclosed counter (ri, kou, tian) keeps a paper bridge. No zodiac, no extra characters. " +
+      BAND
     );
   }
 
   return (
-    "A Chinese jianzhi paper-cut stencil designed as a wraparound lantern band. " +
-    `The word ${word} is the single dominant motif, cut as bold high-contrast serif capital letters ` +
-    "like a luxury paper-cut letter band (LOEWE Jade lantern, not a logo lockup). " +
-    "Delicate lattice, vines, and geometric bridges grow FROM the letterforms and hold every counter " +
-    "in place so holes in O A R D P B Q stay attached by paper bridges. Seamless left-to-right. " +
-    "Landscape about 3:1. Vermillion red paper only. Transparent background. " +
-    "No extra text, no Zodiac, no photorealism, no gradients, no drop shadow, no outer rectangle."
+    "A Chinese jianzhi paper-cut lantern band: one very long horizontal strip of vermillion paper " +
+    "designed to wrap all the way around a cylinder. " +
+    `The word ${word} is repeated ${times} times across the strip, left to right, evenly spaced, ` +
+    "with a panel of botanical ornament between each repeat, so that from any single viewpoint " +
+    `one whole ${word} is readable. Each repeat is spelled ${chars.join(" ")} ` +
+    "in bold high-contrast serif capitals with thick even stems and small flat serifs, " +
+    "all letters on one shared baseline, filling about sixty percent of the strip height. " +
+    "The ornament is thistle heads, leaves, berries, seed pods and curling tendrils, and it grows " +
+    "OUT of the letterforms. Every closed counter — the bowl of O, the holes in A R D P B Q — " +
+    "is held by visible paper bridges into the ornament. " +
+    BAND
   );
 }

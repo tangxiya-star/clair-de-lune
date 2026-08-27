@@ -71,134 +71,39 @@ body {
   font-size: 10px;
   letter-spacing: 0.34em;
   text-indent: 0.34em;
-  text-transform: uppercase;
   color: rgba(255, 201, 120, 0.5);
 }
 
-.console {
-  pointer-events: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: min(440px, 92vw);
-}
-
-.field {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  border-bottom: 1px solid rgba(255, 201, 120, 0.24);
-  transition: border-color 0.5s ease;
-}
-
-.field:focus-within {
-  border-bottom-color: rgba(255, 201, 120, 0.66);
-}
-
-#word {
-  flex: 1;
-  min-width: 0;
-  padding: 10px 2px;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: #ffe3bb;
-  font-family: "Noto Serif SC", "Cormorant Garamond", serif;
-  font-size: 26px;
-  font-weight: 300;
-  letter-spacing: 0.2em;
-  text-align: center;
-  text-indent: 0.2em;
-}
-
-#word::placeholder {
-  color: rgba(255, 201, 120, 0.26);
-  letter-spacing: 0.14em;
-}
-
-#word:disabled {
-  color: rgba(255, 201, 120, 0.42);
-}
-
-#cut,
+/* No surfaces anywhere. Every action is a word in tungsten light: the room
+   holds one object, and the UI is not allowed to become a second one. */
 .download {
   flex: none;
-  padding: 8px 4px 8px 16px;
+  padding: 0;
   border: 0;
-  background: transparent;
-  color: rgba(255, 201, 120, 0.72);
-  font-family: inherit;
-  font-size: 11px;
-  letter-spacing: 0.3em;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: rgba(255, 201, 120, 0.4);
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.35s ease, opacity 0.35s ease;
-}
-
-#cut:hover:not(:disabled),
-.download:hover {
-  color: var(--light);
-}
-
-#cut:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.note {
-  margin: 0;
-  min-height: 14px;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255, 201, 120, 0.38);
-  text-align: center;
-  transition: color 0.4s ease;
-}
-
-.note[data-state="error"] {
-  color: rgba(196, 30, 58, 0.95);
-}
-
-.note[data-state="busy"] {
-  color: rgba(255, 201, 120, 0.78);
-}
-
-/* Spare letter-bands hanging under the input, not a gallery wall. */
-.chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.chip {
-  min-height: 44px;
-  padding: 8px 16px;
-  border: 1px solid rgba(255, 201, 120, 0.16);
-  border-radius: 1px;
-  background: rgba(196, 30, 58, 0.07);
-  color: rgba(255, 201, 120, 0.6);
-  font-family: "Noto Serif SC", "Cormorant Garamond", serif;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-indent: 0.22em;
-  cursor: pointer;
-  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-}
-
-.chip:hover {
-  color: var(--light);
-  border-color: rgba(255, 201, 120, 0.42);
-  background: rgba(196, 30, 58, 0.18);
-}
-
-.download {
+  /* The lit state is a hairline, drawn but transparent, so nothing shifts. */
+  border-bottom: 1px solid transparent;
+  padding-bottom: 3px;
+  transition: color 0.35s ease, border-color 0.35s ease, opacity 0.3s ease;
   pointer-events: auto;
-  padding: 10px 18px;
-  border: 1px solid rgba(255, 201, 120, 0.22);
+}
+
+/* Turning toward the light, not lighting up a box. */
+.download:hover,
+.download:focus-visible {
+  color: var(--light);
+  border-bottom-color: rgba(255, 201, 120, 0.5);
+  outline: none;
 }
 
 .download[hidden] {
@@ -206,9 +111,6 @@ body {
 }
 
 @media (max-width: 560px) {
-  #word {
-    font-size: 21px;
-  }
   #room {
     cursor: auto;
   }
